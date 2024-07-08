@@ -83,3 +83,6 @@ then create a GPIO port named `TFT`
 
 the GPIO port has 4 pins: `DC`	`RES`	`CS`	`BL`	(The first two default clear, the last two default set)
 
+# about imu660ra
+
+still has some bugs,please waiting for update
