@@ -1,7 +1,7 @@
 # FIXED
 
 mspm0g3507.o: ../mspm0g3507.c \
- C:/Users/86182/workspace_ccstheia/TangSong_TILibrary_OpenSource/code/COMMON.h \
+ C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/code/COMMON.h \
  ti_msp_dl_config.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/devices/msp/msp.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/devices/DeviceFamily.h \
@@ -75,11 +75,11 @@ mspm0g3507.o: ../mspm0g3507.c \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/dl_wwdt.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_interrupt.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_systick.h \
- C:/Users/86182/workspace_ccstheia/TangSong_TILibrary_OpenSource/code/TFT180.h \
- C:/Users/86182/workspace_ccstheia/TangSong_TILibrary_OpenSource/code/IMU660.h \
- C:/Users/86182/workspace_ccstheia/TangSong_TILibrary_OpenSource/ti/eeprom/emulation_type_b/eeprom_emulation_type_b.h
+ C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/code/TFT180.h \
+ C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/code/IMU660.h \
+ C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/ti/eeprom/emulation_type_b/eeprom_emulation_type_b.h
 
-C:/Users/86182/workspace_ccstheia/TangSong_TILibrary_OpenSource/code/COMMON.h:
+C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/code/COMMON.h:
 
 ti_msp_dl_config.h:
 
@@ -227,8 +227,8 @@ C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_interrupt.h:
 
 C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_systick.h:
 
-C:/Users/86182/workspace_ccstheia/TangSong_TILibrary_OpenSource/code/TFT180.h:
+C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/code/TFT180.h:
 
-C:/Users/86182/workspace_ccstheia/TangSong_TILibrary_OpenSource/code/IMU660.h:
+C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/code/IMU660.h:
 
-C:/Users/86182/workspace_ccstheia/TangSong_TILibrary_OpenSource/ti/eeprom/emulation_type_b/eeprom_emulation_type_b.h:
+C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/ti/eeprom/emulation_type_b/eeprom_emulation_type_b.h:

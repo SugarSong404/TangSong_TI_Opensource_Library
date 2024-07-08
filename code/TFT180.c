@@ -105,8 +105,8 @@ void tft180_write_8bit_data (uint8_t data){
     DL_SPI_transmitData8  (TFT_SPI_INST, data);while (DL_SPI_isBusy(TFT_SPI_INST));
 }
 void tft180_write_16bit_data (uint16_t data){
-    DL_SPI_transmitData16(TFT_SPI_INST, data);while (DL_SPI_isBusy(TFT_SPI_INST));
-    DL_SPI_transmitData16(TFT_SPI_INST, data);while (DL_SPI_isBusy(TFT_SPI_INST));
+    DL_SPI_transmitData8(TFT_SPI_INST, (uint8_t)((data & 0xFF00) >> 8));while (DL_SPI_isBusy(TFT_SPI_INST));
+    DL_SPI_transmitData8(TFT_SPI_INST, (uint8_t)(data & 0x00FF));while (DL_SPI_isBusy(TFT_SPI_INST));
 }
 static void tft180_write_index (uint8_t dat)
 {
@@ -300,77 +300,66 @@ int abs(int x){
     if (x>=0)return x;
     else return -x;
 }
-void func_float_to_str (char *str, float number, uint8_t point_bit)
-{
-    int data_int = 0;                                                          
-    int data_float = 0.0;                                                     
-    int data_temp[8];                                                          
-    int data_temp_point[6];                                                   
-    uint8_t bit = point_bit;                                                    
+void func_float_to_str(char *str, float number, uint8_t point_bit) {
+    int data_int = 0;
+    int data_float = 0;
+    int data_temp[8];
+    int data_temp_point[6];
+    uint8_t bit = point_bit;
+    bool is_decimal_zero = true;
 
-    do
-    {
-        if(NULL == str)
-        {
+    do {
+        if (NULL == str) {
             break;
         }
 
-        data_int = (int)number;                                             
-        if(0 > number)                                         
-        {
-            *str ++ = '-';
-        }
-        else if(0.0 == number)                                      
-        {
-            *str ++ = '0';
-            *str ++ = '.';
-            *str = '0';
-            break;
+        data_int = (int)number;
+        if (0 > number) {
+            *str++ = '-';
+        } else if (0.0 == number) {
+            *str++ = '0';
+            break; 
         }
 
-        number = number - data_int;                                      
-        while(bit --)
-        {
-            number = number * 10;                                
+        number = number - data_int;
+        while (bit--) {
+            number = number * 10;
         }
-        data_float = (int)number;                                        
+        data_float = (int)number;
+
+        // Check if the decimal part is all zeros
+        if (data_float != 0) {
+            is_decimal_zero = false;
+        }
 
         bit = 0;
-        do
-        {
-            data_temp[bit ++] = data_int % 10;                              
+        do {
+            data_temp[bit++] = data_int % 10;
             data_int /= 10;
-        }while(0 != data_int);
-        while(0 != bit)
-        {
-            *str ++ = (abs(data_temp[bit - 1]) + 0x30);              
-            bit --;
+        } while (0 != data_int);
+        while (0 != bit) {
+            *str++ = (abs(data_temp[bit - 1]) + 0x30);
+            bit--;
         }
-        if(point_bit != 0)
-        {
+
+        if (point_bit != 0 && !is_decimal_zero) {
             bit = 0;
-            *str ++ = '.';
-            if(0 == data_float)
-            {
-                *str = '0';
-            }
-            else
-            {
-                while(0 != point_bit)                                         
-                {
-                    data_temp_point[bit ++] = data_float % 10;                
-                    data_float /= 10;
-                    point_bit --;
-                }
-                while(0 != bit)
-                {
-                    *str ++ = (abs(data_temp_point[bit - 1]) + 0x30);      
-                    bit --;
-                }
+            *str++ = '.';
+            
+            do {
+                data_temp_point[bit++] = data_float % 10;
+                data_float /= 10;
+                point_bit--;
+            } while (0 != point_bit);
+
+            while (0 != bit) {
+                *str++ = (abs(data_temp_point[bit - 1]) + 0x30);
+                bit--;
             }
         }
-    }while(0);
+    } while (0);
 }
+
 void tft180_show_num_color (uint8_t x, uint8_t y, const float dat, uint8_t num, uint8_t pointnum,uint16_t tft180_bgcolor,uint16_t tft180_pencolor)
 {
     float dat_temp = dat;

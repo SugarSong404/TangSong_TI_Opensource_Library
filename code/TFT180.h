@@ -18,7 +18,7 @@ typedef enum
     GRAY     = (0x8430),                                                     // 灰色
 }color_enum;
 
-static uint16_t           tft180_pencolor     = BLACK;
+static uint16_t           tft180_pencolor     = BLUE;
 static uint16_t           tft180_bgcolor      = WHITE;
 static uint8_t            tft180_x_max        = 160;
 static uint8_t            tft180_y_max        = 128;
