@@ -1,0 +1,10 @@
+"./mspm0g3507.o"
+"./ti_msp_dl_config.o"
+"./startup_mspm0g350x_ticlang.o"
+"./code/IMU660.o"
+"./code/TFT180.o"
+"./ti/eeprom/emulation_type_a/eeprom_emulation_type_a.o"
+"./ti/eeprom/emulation_type_b/eeprom_emulation_type_b.o"
+"../mspm0g3507.cmd"
+-ldevice.cmd.genlibs
+-llibc.a
