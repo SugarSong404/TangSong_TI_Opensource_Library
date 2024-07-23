@@ -1,8 +1,8 @@
 # FIXED
 
-ti/eeprom/emulation_type_b/eeprom_emulation_type_b.o: \
- ../ti/eeprom/emulation_type_b/eeprom_emulation_type_b.c \
- ../ti/eeprom/emulation_type_b/eeprom_emulation_type_b.h \
+Library/Basic/OpenMv.o: ../Library/Basic/OpenMv.c \
+ ../Library/Basic/OpenMv.h ../Library/COMMON.h \
+ ti_msp_dl_config.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/devices/msp/msp.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/devices/DeviceFamily.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/devices/msp/m0p/mspm0g350x.h \
@@ -74,9 +74,17 @@ ti/eeprom/emulation_type_b/eeprom_emulation_type_b.o: \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/dl_vref.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/dl_wwdt.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_interrupt.h \
- C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_systick.h
+ C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_systick.h \
+ ../Library/Basic/TFT180.h \
+ ../Library/Basic/ICM20602.h \
+ ../Library/Basic/OpenMv.h \
+ ../Library/ti/eeprom/emulation_type_b/eeprom_emulation_type_b.h
 
-../ti/eeprom/emulation_type_b/eeprom_emulation_type_b.h:
+../Library/Basic/OpenMv.h:
+
+../Library/COMMON.h:
+
+ti_msp_dl_config.h:
 
 C:/ti/mspm0_sdk_2_01_00_03/source/ti/devices/msp/msp.h:
 
@@ -221,3 +229,11 @@ C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/dl_wwdt.h:
 C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_interrupt.h:
 
 C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_systick.h:
+
+../Library/Basic/TFT180.h:
+
+../Library/Basic/ICM20602.h:
+
+../Library/Basic/OpenMv.h:
+
+../Library/ti/eeprom/emulation_type_b/eeprom_emulation_type_b.h:

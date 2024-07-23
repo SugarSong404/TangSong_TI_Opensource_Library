@@ -1,8 +1,8 @@
 # FIXED
 
-ti/eeprom/emulation_type_a/eeprom_emulation_type_a.o: \
- ../ti/eeprom/emulation_type_a/eeprom_emulation_type_a.c \
- ../ti/eeprom/emulation_type_a/eeprom_emulation_type_a.h \
+Library/ti/eeprom/emulation_type_a/eeprom_emulation_type_a.o: \
+ ../Library/ti/eeprom/emulation_type_a/eeprom_emulation_type_a.c \
+ ../Library/ti/eeprom/emulation_type_a/eeprom_emulation_type_a.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/devices/msp/msp.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/devices/DeviceFamily.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/devices/msp/m0p/mspm0g350x.h \
@@ -76,7 +76,7 @@ ti/eeprom/emulation_type_a/eeprom_emulation_type_a.o: \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_interrupt.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_systick.h
 
-../ti/eeprom/emulation_type_a/eeprom_emulation_type_a.h:
+../Library/ti/eeprom/emulation_type_a/eeprom_emulation_type_a.h:
 
 C:/ti/mspm0_sdk_2_01_00_03/source/ti/devices/msp/msp.h:
 

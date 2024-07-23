@@ -40,7 +40,7 @@
 
 #include "ti_msp_dl_config.h"
 
-DL_SPI_backupConfig gIMU_SPIBackup;
+DL_SPI_backupConfig gICM_SPIBackup;
 DL_SPI_backupConfig gTFT_SPIBackup;
 
 /*
@@ -53,10 +53,12 @@ SYSCONFIG_WEAK void SYSCFG_DL_init(void)
     SYSCFG_DL_GPIO_init();
     /* Module-Specific Initializations*/
     SYSCFG_DL_SYSCTL_init();
-    SYSCFG_DL_IMU_SPI_init();
+    SYSCFG_DL_OPENMV_init();
+    SYSCFG_DL_ICM_SPI_init();
     SYSCFG_DL_TFT_SPI_init();
     /* Ensure backup structures have no valid state */
-	gIMU_SPIBackup.backupRdy 	= false;
+
+	gICM_SPIBackup.backupRdy 	= false;
 	gTFT_SPIBackup.backupRdy 	= false;
 
 }
@@ -68,7 +70,7 @@ SYSCONFIG_WEAK bool SYSCFG_DL_saveConfiguration(void)
 {
     bool retStatus = true;
 
-	retStatus &= DL_SPI_saveConfiguration(IMU_SPI_INST, &gIMU_SPIBackup);
+	retStatus &= DL_SPI_saveConfiguration(ICM_SPI_INST, &gICM_SPIBackup);
 	retStatus &= DL_SPI_saveConfiguration(TFT_SPI_INST, &gTFT_SPIBackup);
 
     return retStatus;
@@ -79,7 +81,7 @@ SYSCONFIG_WEAK bool SYSCFG_DL_restoreConfiguration(void)
 {
     bool retStatus = true;
 
-	retStatus &= DL_SPI_restoreConfiguration(IMU_SPI_INST, &gIMU_SPIBackup);
+	retStatus &= DL_SPI_restoreConfiguration(ICM_SPI_INST, &gICM_SPIBackup);
 	retStatus &= DL_SPI_restoreConfiguration(TFT_SPI_INST, &gTFT_SPIBackup);
 
     return retStatus;
@@ -89,12 +91,14 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
 {
     DL_GPIO_reset(GPIOA);
     DL_GPIO_reset(GPIOB);
-    DL_SPI_reset(IMU_SPI_INST);
+    DL_UART_Main_reset(OPENMV_INST);
+    DL_SPI_reset(ICM_SPI_INST);
     DL_SPI_reset(TFT_SPI_INST);
 
     DL_GPIO_enablePower(GPIOA);
     DL_GPIO_enablePower(GPIOB);
-    DL_SPI_enablePower(IMU_SPI_INST);
+    DL_UART_Main_enablePower(OPENMV_INST);
+    DL_SPI_enablePower(ICM_SPI_INST);
     DL_SPI_enablePower(TFT_SPI_INST);
     delay_cycles(POWER_STARTUP_DELAY);
 }
@@ -103,13 +107,18 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 {
 
     DL_GPIO_initPeripheralOutputFunction(
-        GPIO_IMU_SPI_IOMUX_SCLK, GPIO_IMU_SPI_IOMUX_SCLK_FUNC);
-    DL_GPIO_initPeripheralOutputFunction(
-        GPIO_IMU_SPI_IOMUX_PICO, GPIO_IMU_SPI_IOMUX_PICO_FUNC);
+        GPIO_OPENMV_IOMUX_TX, GPIO_OPENMV_IOMUX_TX_FUNC);
     DL_GPIO_initPeripheralInputFunction(
-        GPIO_IMU_SPI_IOMUX_POCI, GPIO_IMU_SPI_IOMUX_POCI_FUNC);
+        GPIO_OPENMV_IOMUX_RX, GPIO_OPENMV_IOMUX_RX_FUNC);
+
     DL_GPIO_initPeripheralOutputFunction(
-        GPIO_IMU_SPI_IOMUX_CS1, GPIO_IMU_SPI_IOMUX_CS1_FUNC);
+        GPIO_ICM_SPI_IOMUX_SCLK, GPIO_ICM_SPI_IOMUX_SCLK_FUNC);
+    DL_GPIO_initPeripheralOutputFunction(
+        GPIO_ICM_SPI_IOMUX_PICO, GPIO_ICM_SPI_IOMUX_PICO_FUNC);
+    DL_GPIO_initPeripheralInputFunction(
+        GPIO_ICM_SPI_IOMUX_POCI, GPIO_ICM_SPI_IOMUX_POCI_FUNC);
+    DL_GPIO_initPeripheralOutputFunction(
+        GPIO_ICM_SPI_IOMUX_CS1, GPIO_ICM_SPI_IOMUX_CS1_FUNC);
     DL_GPIO_initPeripheralOutputFunction(
         GPIO_TFT_SPI_IOMUX_SCLK, GPIO_TFT_SPI_IOMUX_SCLK_FUNC);
     DL_GPIO_initPeripheralOutputFunction(
@@ -119,7 +128,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_initPeripheralOutputFunction(
         GPIO_TFT_SPI_IOMUX_CS0, GPIO_TFT_SPI_IOMUX_CS0_FUNC);
 
-    DL_GPIO_initDigitalOutput(OTHER_IMU_CS_IOMUX);
+    DL_GPIO_initDigitalOutput(OTHER_ICM_CS_IOMUX);
 
     DL_GPIO_initDigitalOutput(TFT_DC_IOMUX);
 
@@ -131,10 +140,10 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 
     DL_GPIO_clearPins(GPIOB, TFT_DC_PIN |
 		TFT_RES_PIN);
-    DL_GPIO_setPins(GPIOB, OTHER_IMU_CS_PIN |
+    DL_GPIO_setPins(GPIOB, OTHER_ICM_CS_PIN |
 		TFT_CS_PIN |
 		TFT_BL_PIN);
-    DL_GPIO_enableOutput(GPIOB, OTHER_IMU_CS_PIN |
+    DL_GPIO_enableOutput(GPIOB, OTHER_ICM_CS_PIN |
 		TFT_DC_PIN |
 		TFT_RES_PIN |
 		TFT_CS_PIN |
@@ -159,7 +168,40 @@ SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_init(void)
 }
 
 
-static const DL_SPI_Config gIMU_SPI_config = {
+
+static const DL_UART_Main_ClockConfig gOPENMVClockConfig = {
+    .clockSel    = DL_UART_MAIN_CLOCK_BUSCLK,
+    .divideRatio = DL_UART_MAIN_CLOCK_DIVIDE_RATIO_1
+};
+
+static const DL_UART_Main_Config gOPENMVConfig = {
+    .mode        = DL_UART_MAIN_MODE_NORMAL,
+    .direction   = DL_UART_MAIN_DIRECTION_TX_RX,
+    .flowControl = DL_UART_MAIN_FLOW_CONTROL_NONE,
+    .parity      = DL_UART_MAIN_PARITY_NONE,
+    .wordLength  = DL_UART_MAIN_WORD_LENGTH_8_BITS,
+    .stopBits    = DL_UART_MAIN_STOP_BITS_ONE
+};
+
+SYSCONFIG_WEAK void SYSCFG_DL_OPENMV_init(void)
+{
+    DL_UART_Main_setClockConfig(OPENMV_INST, (DL_UART_Main_ClockConfig *) &gOPENMVClockConfig);
+
+    DL_UART_Main_init(OPENMV_INST, (DL_UART_Main_Config *) &gOPENMVConfig);
+    /*
+     * Configure baud rate by setting oversampling and baud rate divisors.
+     *  Target baud rate: 19200
+     *  Actual baud rate: 19199.04
+     */
+    DL_UART_Main_setOversampling(OPENMV_INST, DL_UART_OVERSAMPLING_RATE_16X);
+    DL_UART_Main_setBaudRateDivisor(OPENMV_INST, OPENMV_IBRD_32_MHZ_19200_BAUD, OPENMV_FBRD_32_MHZ_19200_BAUD);
+
+
+
+    DL_UART_Main_enable(OPENMV_INST);
+}
+
+static const DL_SPI_Config gICM_SPI_config = {
     .mode        = DL_SPI_MODE_CONTROLLER,
     .frameFormat = DL_SPI_FRAME_FORMAT_MOTO4_POL0_PHA0,
     .parity      = DL_SPI_PARITY_NONE,
@@ -168,15 +210,15 @@ static const DL_SPI_Config gIMU_SPI_config = {
     .chipSelectPin = DL_SPI_CHIP_SELECT_1,
 };
 
-static const DL_SPI_ClockConfig gIMU_SPI_clockConfig = {
+static const DL_SPI_ClockConfig gICM_SPI_clockConfig = {
     .clockSel    = DL_SPI_CLOCK_BUSCLK,
     .divideRatio = DL_SPI_CLOCK_DIVIDE_RATIO_1
 };
 
-SYSCONFIG_WEAK void SYSCFG_DL_IMU_SPI_init(void) {
-    DL_SPI_setClockConfig(IMU_SPI_INST, (DL_SPI_ClockConfig *) &gIMU_SPI_clockConfig);
+SYSCONFIG_WEAK void SYSCFG_DL_ICM_SPI_init(void) {
+    DL_SPI_setClockConfig(ICM_SPI_INST, (DL_SPI_ClockConfig *) &gICM_SPI_clockConfig);
 
-    DL_SPI_init(IMU_SPI_INST, (DL_SPI_Config *) &gIMU_SPI_config);
+    DL_SPI_init(ICM_SPI_INST, (DL_SPI_Config *) &gICM_SPI_config);
 
     /* Configure Controller mode */
     /*
@@ -184,12 +226,12 @@ SYSCONFIG_WEAK void SYSCFG_DL_IMU_SPI_init(void) {
      *     outputBitRate = (spiInputClock) / ((1 + SCR) * 2)
      *     8000000 = (32000000)/((1 + 1) * 2)
      */
-    DL_SPI_setBitRateSerialClockDivider(IMU_SPI_INST, 1);
+    DL_SPI_setBitRateSerialClockDivider(ICM_SPI_INST, 1);
     /* Set RX and TX FIFO threshold levels */
-    DL_SPI_setFIFOThreshold(IMU_SPI_INST, DL_SPI_RX_FIFO_LEVEL_1_2_FULL, DL_SPI_TX_FIFO_LEVEL_1_2_EMPTY);
+    DL_SPI_setFIFOThreshold(ICM_SPI_INST, DL_SPI_RX_FIFO_LEVEL_1_2_FULL, DL_SPI_TX_FIFO_LEVEL_1_2_EMPTY);
 
     /* Enable module */
-    DL_SPI_enable(IMU_SPI_INST);
+    DL_SPI_enable(ICM_SPI_INST);
 }
 static const DL_SPI_Config gTFT_SPI_config = {
     .mode        = DL_SPI_MODE_CONTROLLER,

@@ -1,6 +1,7 @@
 # FIXED
 
-code/IMU660.o: ../code/IMU660.c ../code/IMU660.h ../code/COMMON.h \
+Library/Basic/TFT180.o: ../Library/Basic/TFT180.c \
+ ../Library/Basic/TFT180.h ../Library/COMMON.h \
  ti_msp_dl_config.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/devices/msp/msp.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/devices/DeviceFamily.h \
@@ -74,11 +75,14 @@ code/IMU660.o: ../code/IMU660.c ../code/IMU660.h ../code/COMMON.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/dl_wwdt.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_interrupt.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_systick.h \
- ../code/TFT180.h
+ ../Library/Basic/TFT180.h \
+ ../Library/Basic/ICM20602.h \
+ ../Library/Basic/OpenMv.h \
+ ../Library/ti/eeprom/emulation_type_b/eeprom_emulation_type_b.h
 
-../code/IMU660.h:
+../Library/Basic/TFT180.h:
 
-../code/COMMON.h:
+../Library/COMMON.h:
 
 ti_msp_dl_config.h:
 
@@ -226,4 +230,10 @@ C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_interrupt.h:
 
 C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_systick.h:
 
-../code/TFT180.h:
+../Library/Basic/TFT180.h:
+
+../Library/Basic/ICM20602.h:
+
+../Library/Basic/OpenMv.h:
+
+../Library/ti/eeprom/emulation_type_b/eeprom_emulation_type_b.h:

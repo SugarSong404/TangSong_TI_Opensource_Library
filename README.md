@@ -2,9 +2,17 @@
 
 made by TangSong404
 
-# about code directory
+my CSDN blog (about TI-MSPM0G3507)
 
-code dir is used to store library files that you wrote
+[嵌入式_Tangsong:)的博客-CSDN博客](https://blog.csdn.net/2401_86231275/category_12723410.html?spm=1001.2014.3001.5482)
+
+my own blog(my sweet home)
+
+[TangSong404's Blog](https://www.tangsong404.top/)
+
+# about Libarary directory
+
+Libarary dir is used to store library files that you wrote
 
 the COMMON.h  is used to integrate all library files in the code directory
 
@@ -83,6 +91,35 @@ then create a GPIO port named `TFT`
 
 the GPIO port has 4 pins: `DC`	`RES`	`CS`	`BL`	(The first two default clear, the last two default set)
 
-# about imu660ra
+# about icm20602
 
-still has some bugs,please waiting for update
+To fit the code of `icm20602`
+
+you should create a SPI named `ICM_SPI`
+
+then create a GPIO port named `OTHER`
+
+the GPIO port has 1 pin: `ICM_CS` (default set)
+
+# about openmv
+
+To fit the code of `openmv`
+
+you should create a UARTnamed `OPENMV`
+
+and set the Baud Rate same to openmv (default)
+
+```
+uint8_t openmv_init();//use to check connection
+
+void openmv_cmd(uint8_t cmd , uint8_t (*func)(uint8_t*));//use to register a command with callback function
+
+float openmv_parse_float(uint8_t* data,uint8_t* index);//use to get a float data
+
+int openmv_parse_int(uint8_t* data, uint8_t* index);//use to get a int data
+
+const char* openmv_parse_string(uint8_t* data, uint8_t* index);//use to get a string data
+
+uint8_t openmv_parse_byte(uint8_t* data, uint8_t* index);//use to get a byte data
+```
+

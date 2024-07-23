@@ -1,6 +1,6 @@
 #ifndef TFT_180_H
 #define TFT_180_H
-#include "COMMON.h"
+#include "../COMMON.h"
 
 typedef enum
 {
