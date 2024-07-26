@@ -2,24 +2,8 @@
 #define TFT_180_H
 #include "../COMMON.h"
 
-typedef enum
-{
-    WHITE    = (0xFFFF),                                                     // 白色
-    BLACK    = (0x0000),                                                     // 黑色
-    BLUE     = (0x001F),                                                     // 蓝色
-    PURPLE   = (0xF81F),                                                     // 紫色
-    PINK     = (0xFE19),                                                     // 粉色
-    RED      = (0xF800),                                                     // 红色
-    MAGENTA  = (0xF81F),                                                     // 品红
-    GREEN    = (0x07E0),                                                     // 绿色
-    CYAN     = (0x07FF),                                                     // 青色
-    YELLOW   = (0xFFE0),                                                     // 黄色
-    BROWN    = (0xBC40),                                                     // 棕色
-    GRAY     = (0x8430),                                                     // 灰色
-}color_enum;
-
-static uint16_t           tft180_pencolor     = BLUE;
-static uint16_t           tft180_bgcolor      = WHITE;
+static uint16_t           tft180_pencolor     = 0x001F;
+static uint16_t           tft180_bgcolor      = 0xFFFF;
 static uint8_t            tft180_x_max        = 160;
 static uint8_t            tft180_y_max        = 128;
 

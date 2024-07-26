@@ -1,7 +1,7 @@
 # FIXED
 
-Library/Basic/TFT180.o: ../Library/Basic/TFT180.c \
- ../Library/Basic/TFT180.h ../Library/COMMON.h \
+Library/Basic/TFT350.o: ../Library/Basic/TFT350.c \
+ ../Library/Basic/TFT350.h ../Library/COMMON.h \
  ti_msp_dl_config.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/devices/msp/msp.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/devices/DeviceFamily.h \
@@ -81,7 +81,7 @@ Library/Basic/TFT180.o: ../Library/Basic/TFT180.c \
  ../Library/Basic/OpenMv.h \
  ../Library/ti/eeprom/emulation_type_b/eeprom_emulation_type_b.h
 
-../Library/Basic/TFT180.h:
+../Library/Basic/TFT350.h:
 
 ../Library/COMMON.h:
 

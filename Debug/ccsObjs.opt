@@ -4,6 +4,8 @@
 "./Library/Basic/ICM20602.o"
 "./Library/Basic/OpenMv.o"
 "./Library/Basic/TFT180.o"
+"./Library/Basic/TFT350.o"
+"./Library/COMMON.o"
 "./Library/ti/eeprom/emulation_type_a/eeprom_emulation_type_a.o"
 "./Library/ti/eeprom/emulation_type_b/eeprom_emulation_type_b.o"
 "../mspm0g3507.cmd"

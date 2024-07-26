@@ -77,6 +77,7 @@ mspm0g3507.o: ../mspm0g3507.c \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_systick.h \
  C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/Library/Basic/TFT180.h \
  C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/Library/COMMON.h \
+ C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/Library/Basic/TFT350.h \
  C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/Library/Basic/ICM20602.h \
  C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/Library/Basic/OpenMv.h \
  C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/Library/ti/eeprom/emulation_type_b/eeprom_emulation_type_b.h
@@ -232,6 +233,8 @@ C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_systick.h:
 C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/Library/Basic/TFT180.h:
 
 C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/Library/COMMON.h:
+
+C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/Library/Basic/TFT350.h:
 
 C:/Users/86182/workspace_ccstheia/TangSong_TI_Opensource_Library/Library/Basic/ICM20602.h:
 

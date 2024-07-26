@@ -126,6 +126,7 @@ GEN_OPTS__QUOTED :=
 SUBDIRS := \
 . \
 Library/Basic \
+Library \
 Library/ti/eeprom/emulation_type_a \
 Library/ti/eeprom/emulation_type_b \
 

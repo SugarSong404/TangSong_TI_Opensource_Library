@@ -76,6 +76,7 @@ Library/Basic/ICM20602.o: ../Library/Basic/ICM20602.c \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_interrupt.h \
  C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_systick.h \
  ../Library/Basic/TFT180.h \
+ ../Library/Basic/TFT350.h \
  ../Library/Basic/ICM20602.h \
  ../Library/Basic/OpenMv.h \
  ../Library/ti/eeprom/emulation_type_b/eeprom_emulation_type_b.h
@@ -231,6 +232,8 @@ C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_interrupt.h:
 C:/ti/mspm0_sdk_2_01_00_03/source/ti/driverlib/m0p/dl_systick.h:
 
 ../Library/Basic/TFT180.h:
+
+../Library/Basic/TFT350.h:
 
 ../Library/Basic/ICM20602.h:
 
