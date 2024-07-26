@@ -107,7 +107,7 @@ To fit the code of `openmv`
 
 you should create a UARTnamed `OPENMV`
 
-and set the Baud Rate same to openmv (default)
+and set the Baud Rate same to openmv (default 19200)
 
 ```
 uint8_t openmv_init();//use to check connection
@@ -123,3 +123,10 @@ const char* openmv_parse_string(uint8_t* data, uint8_t* index);//use to get a st
 uint8_t openmv_parse_byte(uint8_t* data, uint8_t* index);//use to get a byte data
 ```
 
+# about tft350
+
+To fit the code of `TFT350`
+
+the config is same to `TFT180`
+
+but you cant use tft350 while the tft180 is using unless spi instances of them are modified
