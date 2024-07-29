@@ -53,6 +53,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_init(void)
     SYSCFG_DL_GPIO_init();
     /* Module-Specific Initializations*/
     SYSCFG_DL_SYSCTL_init();
+    SYSCFG_DL_ESP01_init();
     SYSCFG_DL_OPENMV_init();
     SYSCFG_DL_ICM_SPI_init();
     SYSCFG_DL_TFT_SPI_init();
@@ -91,12 +92,14 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
 {
     DL_GPIO_reset(GPIOA);
     DL_GPIO_reset(GPIOB);
+    DL_UART_Main_reset(ESP01_INST);
     DL_UART_Main_reset(OPENMV_INST);
     DL_SPI_reset(ICM_SPI_INST);
     DL_SPI_reset(TFT_SPI_INST);
 
     DL_GPIO_enablePower(GPIOA);
     DL_GPIO_enablePower(GPIOB);
+    DL_UART_Main_enablePower(ESP01_INST);
     DL_UART_Main_enablePower(OPENMV_INST);
     DL_SPI_enablePower(ICM_SPI_INST);
     DL_SPI_enablePower(TFT_SPI_INST);
@@ -106,6 +109,10 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
 SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 {
 
+    DL_GPIO_initPeripheralOutputFunction(
+        GPIO_ESP01_IOMUX_TX, GPIO_ESP01_IOMUX_TX_FUNC);
+    DL_GPIO_initPeripheralInputFunction(
+        GPIO_ESP01_IOMUX_RX, GPIO_ESP01_IOMUX_RX_FUNC);
     DL_GPIO_initPeripheralOutputFunction(
         GPIO_OPENMV_IOMUX_TX, GPIO_OPENMV_IOMUX_TX_FUNC);
     DL_GPIO_initPeripheralInputFunction(
@@ -128,8 +135,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
     DL_GPIO_initPeripheralOutputFunction(
         GPIO_TFT_SPI_IOMUX_CS0, GPIO_TFT_SPI_IOMUX_CS0_FUNC);
 
-    DL_GPIO_initDigitalOutput(OTHER_ICM_CS_IOMUX);
-
     DL_GPIO_initDigitalOutput(TFT_DC_IOMUX);
 
     DL_GPIO_initDigitalOutput(TFT_RES_IOMUX);
@@ -138,16 +143,26 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 
     DL_GPIO_initDigitalOutput(TFT_BL_IOMUX);
 
+    DL_GPIO_initDigitalOutput(OTHER_ICM_CS_IOMUX);
+
+    DL_GPIO_initDigitalOutput(OTHER_ESP_EN_IOMUX);
+
+    DL_GPIO_initDigitalOutput(OTHER_ESP_RST_IOMUX);
+
     DL_GPIO_clearPins(GPIOB, TFT_DC_PIN |
-		TFT_RES_PIN);
-    DL_GPIO_setPins(GPIOB, OTHER_ICM_CS_PIN |
-		TFT_CS_PIN |
-		TFT_BL_PIN);
-    DL_GPIO_enableOutput(GPIOB, OTHER_ICM_CS_PIN |
-		TFT_DC_PIN |
+		TFT_RES_PIN |
+		OTHER_ESP_RST_PIN);
+    DL_GPIO_setPins(GPIOB, TFT_CS_PIN |
+		TFT_BL_PIN |
+		OTHER_ICM_CS_PIN |
+		OTHER_ESP_EN_PIN);
+    DL_GPIO_enableOutput(GPIOB, TFT_DC_PIN |
 		TFT_RES_PIN |
 		TFT_CS_PIN |
-		TFT_BL_PIN);
+		TFT_BL_PIN |
+		OTHER_ICM_CS_PIN |
+		OTHER_ESP_EN_PIN |
+		OTHER_ESP_RST_PIN);
 
 }
 
@@ -168,6 +183,38 @@ SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_init(void)
 }
 
 
+
+static const DL_UART_Main_ClockConfig gESP01ClockConfig = {
+    .clockSel    = DL_UART_MAIN_CLOCK_BUSCLK,
+    .divideRatio = DL_UART_MAIN_CLOCK_DIVIDE_RATIO_1
+};
+
+static const DL_UART_Main_Config gESP01Config = {
+    .mode        = DL_UART_MAIN_MODE_NORMAL,
+    .direction   = DL_UART_MAIN_DIRECTION_TX_RX,
+    .flowControl = DL_UART_MAIN_FLOW_CONTROL_NONE,
+    .parity      = DL_UART_MAIN_PARITY_NONE,
+    .wordLength  = DL_UART_MAIN_WORD_LENGTH_8_BITS,
+    .stopBits    = DL_UART_MAIN_STOP_BITS_ONE
+};
+
+SYSCONFIG_WEAK void SYSCFG_DL_ESP01_init(void)
+{
+    DL_UART_Main_setClockConfig(ESP01_INST, (DL_UART_Main_ClockConfig *) &gESP01ClockConfig);
+
+    DL_UART_Main_init(ESP01_INST, (DL_UART_Main_Config *) &gESP01Config);
+    /*
+     * Configure baud rate by setting oversampling and baud rate divisors.
+     *  Target baud rate: 115200
+     *  Actual baud rate: 115211.52
+     */
+    DL_UART_Main_setOversampling(ESP01_INST, DL_UART_OVERSAMPLING_RATE_16X);
+    DL_UART_Main_setBaudRateDivisor(ESP01_INST, ESP01_IBRD_32_MHZ_115200_BAUD, ESP01_FBRD_32_MHZ_115200_BAUD);
+
+
+
+    DL_UART_Main_enable(ESP01_INST);
+}
 
 static const DL_UART_Main_ClockConfig gOPENMVClockConfig = {
     .clockSel    = DL_UART_MAIN_CLOCK_BUSCLK,
@@ -190,11 +237,11 @@ SYSCONFIG_WEAK void SYSCFG_DL_OPENMV_init(void)
     DL_UART_Main_init(OPENMV_INST, (DL_UART_Main_Config *) &gOPENMVConfig);
     /*
      * Configure baud rate by setting oversampling and baud rate divisors.
-     *  Target baud rate: 19200
-     *  Actual baud rate: 19199.04
+     *  Target baud rate: 115200
+     *  Actual baud rate: 115211.52
      */
     DL_UART_Main_setOversampling(OPENMV_INST, DL_UART_OVERSAMPLING_RATE_16X);
-    DL_UART_Main_setBaudRateDivisor(OPENMV_INST, OPENMV_IBRD_32_MHZ_19200_BAUD, OPENMV_FBRD_32_MHZ_19200_BAUD);
+    DL_UART_Main_setBaudRateDivisor(OPENMV_INST, OPENMV_IBRD_32_MHZ_115200_BAUD, OPENMV_FBRD_32_MHZ_115200_BAUD);
 
 
 

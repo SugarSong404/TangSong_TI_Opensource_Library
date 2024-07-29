@@ -1,6 +1,7 @@
 "./mspm0g3507.o"
 "./ti_msp_dl_config.o"
 "./startup_mspm0g350x_ticlang.o"
+"./Library/Basic/ESP01.o"
 "./Library/Basic/ICM20602.o"
 "./Library/Basic/OpenMv.o"
 "./Library/Basic/TFT180.o"

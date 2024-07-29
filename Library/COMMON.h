@@ -2,11 +2,14 @@
 #define COMMON_H
 
 #include "ti_msp_dl_config.h"
+#include <stdio.h>
+#include <math.h>
 
 #include "/Basic/TFT180.h"
 #include "/Basic/TFT350.h"
 #include "/Basic/ICM20602.h"
 #include "/Basic/OpenMv.h"
+#include "/Basic/ESP01.h"
 
 #include "/ti/eeprom/emulation_type_b/eeprom_emulation_type_b.h"
 

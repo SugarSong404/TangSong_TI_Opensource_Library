@@ -13,6 +13,7 @@ ORDERED_OBJS += \
 "./mspm0g3507.o" \
 "./ti_msp_dl_config.o" \
 "./startup_mspm0g350x_ticlang.o" \
+"./Library/Basic/ESP01.o" \
 "./Library/Basic/ICM20602.o" \
 "./Library/Basic/OpenMv.o" \
 "./Library/Basic/TFT180.o" \
@@ -159,8 +160,8 @@ TangSong_TI_Opensource_Library.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 # Other Targets
 clean:
 	-$(RM) $(GEN_MISC_FILES__QUOTED)$(GEN_FILES__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "mspm0g3507.o" "ti_msp_dl_config.o" "startup_mspm0g350x_ticlang.o" "Library\Basic\ICM20602.o" "Library\Basic\OpenMv.o" "Library\Basic\TFT180.o" "Library\Basic\TFT350.o" "Library\COMMON.o" "Library\ti\eeprom\emulation_type_a\eeprom_emulation_type_a.o" "Library\ti\eeprom\emulation_type_b\eeprom_emulation_type_b.o" 
-	-$(RM) "mspm0g3507.d" "ti_msp_dl_config.d" "startup_mspm0g350x_ticlang.d" "Library\Basic\ICM20602.d" "Library\Basic\OpenMv.d" "Library\Basic\TFT180.d" "Library\Basic\TFT350.d" "Library\COMMON.d" "Library\ti\eeprom\emulation_type_a\eeprom_emulation_type_a.d" "Library\ti\eeprom\emulation_type_b\eeprom_emulation_type_b.d" 
+	-$(RM) "mspm0g3507.o" "ti_msp_dl_config.o" "startup_mspm0g350x_ticlang.o" "Library\Basic\ESP01.o" "Library\Basic\ICM20602.o" "Library\Basic\OpenMv.o" "Library\Basic\TFT180.o" "Library\Basic\TFT350.o" "Library\COMMON.o" "Library\ti\eeprom\emulation_type_a\eeprom_emulation_type_a.o" "Library\ti\eeprom\emulation_type_b\eeprom_emulation_type_b.o" 
+	-$(RM) "mspm0g3507.d" "ti_msp_dl_config.d" "startup_mspm0g350x_ticlang.d" "Library\Basic\ESP01.d" "Library\Basic\ICM20602.d" "Library\Basic\OpenMv.d" "Library\Basic\TFT180.d" "Library\Basic\TFT350.d" "Library\COMMON.d" "Library\ti\eeprom\emulation_type_a\eeprom_emulation_type_a.d" "Library\ti\eeprom\emulation_type_b\eeprom_emulation_type_b.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

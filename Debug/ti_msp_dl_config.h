@@ -77,21 +77,36 @@ extern "C" {
 
 
 
+/* Defines for ESP01 */
+#define ESP01_INST                                                         UART0
+#define ESP01_INST_IRQHandler                                   UART0_IRQHandler
+#define ESP01_INST_INT_IRQN                                       UART0_INT_IRQn
+#define GPIO_ESP01_RX_PORT                                                 GPIOB
+#define GPIO_ESP01_TX_PORT                                                 GPIOB
+#define GPIO_ESP01_RX_PIN                                          DL_GPIO_PIN_1
+#define GPIO_ESP01_TX_PIN                                          DL_GPIO_PIN_0
+#define GPIO_ESP01_IOMUX_RX                                      (IOMUX_PINCM13)
+#define GPIO_ESP01_IOMUX_TX                                      (IOMUX_PINCM12)
+#define GPIO_ESP01_IOMUX_RX_FUNC                       IOMUX_PINCM13_PF_UART0_RX
+#define GPIO_ESP01_IOMUX_TX_FUNC                       IOMUX_PINCM12_PF_UART0_TX
+#define ESP01_BAUD_RATE                                                 (115200)
+#define ESP01_IBRD_32_MHZ_115200_BAUD                                       (17)
+#define ESP01_FBRD_32_MHZ_115200_BAUD                                       (23)
 /* Defines for OPENMV */
-#define OPENMV_INST                                                        UART0
-#define OPENMV_INST_IRQHandler                                  UART0_IRQHandler
-#define OPENMV_INST_INT_IRQN                                      UART0_INT_IRQn
-#define GPIO_OPENMV_RX_PORT                                                GPIOB
-#define GPIO_OPENMV_TX_PORT                                                GPIOB
-#define GPIO_OPENMV_RX_PIN                                         DL_GPIO_PIN_1
-#define GPIO_OPENMV_TX_PIN                                         DL_GPIO_PIN_0
-#define GPIO_OPENMV_IOMUX_RX                                     (IOMUX_PINCM13)
-#define GPIO_OPENMV_IOMUX_TX                                     (IOMUX_PINCM12)
-#define GPIO_OPENMV_IOMUX_RX_FUNC                      IOMUX_PINCM13_PF_UART0_RX
-#define GPIO_OPENMV_IOMUX_TX_FUNC                      IOMUX_PINCM12_PF_UART0_TX
-#define OPENMV_BAUD_RATE                                                 (19200)
-#define OPENMV_IBRD_32_MHZ_19200_BAUD                                      (104)
-#define OPENMV_FBRD_32_MHZ_19200_BAUD                                       (11)
+#define OPENMV_INST                                                        UART1
+#define OPENMV_INST_IRQHandler                                  UART1_IRQHandler
+#define OPENMV_INST_INT_IRQN                                      UART1_INT_IRQn
+#define GPIO_OPENMV_RX_PORT                                                GPIOA
+#define GPIO_OPENMV_TX_PORT                                                GPIOA
+#define GPIO_OPENMV_RX_PIN                                        DL_GPIO_PIN_18
+#define GPIO_OPENMV_TX_PIN                                        DL_GPIO_PIN_17
+#define GPIO_OPENMV_IOMUX_RX                                     (IOMUX_PINCM40)
+#define GPIO_OPENMV_IOMUX_TX                                     (IOMUX_PINCM39)
+#define GPIO_OPENMV_IOMUX_RX_FUNC                      IOMUX_PINCM40_PF_UART1_RX
+#define GPIO_OPENMV_IOMUX_TX_FUNC                      IOMUX_PINCM39_PF_UART1_TX
+#define OPENMV_BAUD_RATE                                                (115200)
+#define OPENMV_IBRD_32_MHZ_115200_BAUD                                      (17)
+#define OPENMV_FBRD_32_MHZ_115200_BAUD                                      (23)
 
 
 
@@ -141,12 +156,6 @@ extern "C" {
 
 
 
-/* Port definition for Pin Group OTHER */
-#define OTHER_PORT                                                       (GPIOB)
-
-/* Defines for ICM_CS: GPIOB.3 with pinCMx 16 on package pin 51 */
-#define OTHER_ICM_CS_PIN                                         (DL_GPIO_PIN_3)
-#define OTHER_ICM_CS_IOMUX                                       (IOMUX_PINCM16)
 /* Port definition for Pin Group TFT */
 #define TFT_PORT                                                         (GPIOB)
 
@@ -162,6 +171,18 @@ extern "C" {
 /* Defines for BL: GPIOB.19 with pinCMx 45 on package pin 16 */
 #define TFT_BL_PIN                                              (DL_GPIO_PIN_19)
 #define TFT_BL_IOMUX                                             (IOMUX_PINCM45)
+/* Port definition for Pin Group OTHER */
+#define OTHER_PORT                                                       (GPIOB)
+
+/* Defines for ICM_CS: GPIOB.3 with pinCMx 16 on package pin 51 */
+#define OTHER_ICM_CS_PIN                                         (DL_GPIO_PIN_3)
+#define OTHER_ICM_CS_IOMUX                                       (IOMUX_PINCM16)
+/* Defines for ESP_EN: GPIOB.12 with pinCMx 29 on package pin 64 */
+#define OTHER_ESP_EN_PIN                                        (DL_GPIO_PIN_12)
+#define OTHER_ESP_EN_IOMUX                                       (IOMUX_PINCM29)
+/* Defines for ESP_RST: GPIOB.20 with pinCMx 48 on package pin 19 */
+#define OTHER_ESP_RST_PIN                                       (DL_GPIO_PIN_20)
+#define OTHER_ESP_RST_IOMUX                                      (IOMUX_PINCM48)
 
 /* clang-format on */
 
@@ -169,6 +190,7 @@ void SYSCFG_DL_init(void);
 void SYSCFG_DL_initPower(void);
 void SYSCFG_DL_GPIO_init(void);
 void SYSCFG_DL_SYSCTL_init(void);
+void SYSCFG_DL_ESP01_init(void);
 void SYSCFG_DL_OPENMV_init(void);
 void SYSCFG_DL_ICM_SPI_init(void);
 void SYSCFG_DL_TFT_SPI_init(void);

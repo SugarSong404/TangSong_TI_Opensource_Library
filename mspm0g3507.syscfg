@@ -17,6 +17,7 @@ const SPI1          = SPI.addInstance();
 const SPI2          = SPI.addInstance();
 const UART          = scripting.addModule("/ti/driverlib/UART", {}, false);
 const UART1         = UART.addInstance();
+const UART2         = UART.addInstance();
 const ProjectConfig = scripting.addModule("/ti/project_config/ProjectConfig");
 
 /**
@@ -38,9 +39,15 @@ GPIO1.associatedPins[3].pin.$assign  = "PB19";
 const Board = scripting.addModule("/ti/driverlib/Board", {}, false);
 
 GPIO2.$name                          = "OTHER";
+GPIO2.associatedPins.create(3);
 GPIO2.associatedPins[0].initialValue = "SET";
 GPIO2.associatedPins[0].$name        = "ICM_CS";
 GPIO2.associatedPins[0].pin.$assign  = "PB3";
+GPIO2.associatedPins[1].$name        = "ESP_EN";
+GPIO2.associatedPins[1].initialValue = "SET";
+GPIO2.associatedPins[1].pin.$assign  = "PB12";
+GPIO2.associatedPins[2].$name        = "ESP_RST";
+GPIO2.associatedPins[2].pin.$assign  = "PB20";
 
 SPI1.chipSelect                         = ["1"];
 SPI1.$name                              = "ICM_SPI";
@@ -92,8 +99,8 @@ const SYSCTL                 = scripting.addModule("/ti/driverlib/SYSCTL", {}, f
 SYSCTL.forceDefaultClkConfig = true;
 SYSCTL.clockTreeEn           = true;
 
-UART1.$name                            = "OPENMV";
-UART1.targetBaudRate                   = 19200;
+UART1.targetBaudRate                   = 115200;
+UART1.$name                            = "ESP01";
 UART1.peripheral.rxPin.$assign         = "PB1";
 UART1.peripheral.txPin.$assign         = "PB0";
 UART1.txPinConfig.$name                = "ti_driverlib_gpio_GPIOPinGeneric8";
@@ -105,6 +112,20 @@ UART1.rxPinConfig.$name                = "ti_driverlib_gpio_GPIOPinGeneric9";
 UART1.rxPinConfig.hideOutputInversion  = scripting.forceWrite(false);
 UART1.rxPinConfig.onlyInternalResistor = scripting.forceWrite(false);
 UART1.rxPinConfig.passedPeripheralType = scripting.forceWrite("Digital");
+
+UART2.targetBaudRate                   = 115200;
+UART2.$name                            = "OPENMV";
+UART2.peripheral.rxPin.$assign         = "PA18";
+UART2.peripheral.txPin.$assign         = "PA17";
+UART2.txPinConfig.$name                = "ti_driverlib_gpio_GPIOPinGeneric10";
+UART2.txPinConfig.direction            = scripting.forceWrite("OUTPUT");
+UART2.txPinConfig.hideOutputInversion  = scripting.forceWrite(false);
+UART2.txPinConfig.onlyInternalResistor = scripting.forceWrite(false);
+UART2.txPinConfig.passedPeripheralType = scripting.forceWrite("Digital");
+UART2.rxPinConfig.$name                = "ti_driverlib_gpio_GPIOPinGeneric11";
+UART2.rxPinConfig.hideOutputInversion  = scripting.forceWrite(false);
+UART2.rxPinConfig.onlyInternalResistor = scripting.forceWrite(false);
+UART2.rxPinConfig.passedPeripheralType = scripting.forceWrite("Digital");
 
 ProjectConfig.deviceSpin = "MSPM0G3507";
 
@@ -120,3 +141,4 @@ SPI1.peripheral.cs1Pin.$suggestSolution    = "PA27";
 SPI2.peripheral.misoPin.$suggestSolution   = "PA10";
 SPI2.peripheral.cs0Pin.$suggestSolution    = "PA2";
 UART1.peripheral.$suggestSolution          = "UART0";
+UART2.peripheral.$suggestSolution          = "UART1";

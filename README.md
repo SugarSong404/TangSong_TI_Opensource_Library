@@ -4,7 +4,7 @@ made by TangSong404
 
 my CSDN blog (about TI-MSPM0G3507)
 
-[嵌入式_Tangsong:)的博客-CSDN博客](https://blog.csdn.net/2401_86231275/category_12723410.html?spm=1001.2014.3001.5482)
+[TI-MSPM0G3507_Tangsong:)的博客-CSDN博客](https://blog.csdn.net/2401_86231275/category_12723410.html?spm=1001.2014.3001.5482)
 
 my own blog(my sweet home)
 
@@ -28,7 +28,7 @@ then  disabled the include of build about `device_linker.cmd`
 
 content:
 
-```
+```C
 -uinterruptVectors
 --stack_size=512
 
@@ -109,7 +109,7 @@ you should create a UARTnamed `OPENMV`
 
 and set the Baud Rate same to openmv (default 19200)
 
-```
+```C
 uint8_t openmv_init();//use to check connection
 
 void openmv_cmd(uint8_t cmd , uint8_t (*func)(uint8_t*));//use to register a command with callback function
@@ -130,3 +130,29 @@ To fit the code of `TFT350`
 the config is same to `TFT180`
 
 but you cant use tft350 while the tft180 is using unless spi instances of them are modified
+
+# about esp01
+
+To fit the code of `esp01`
+
+you should create a UART named `ESP01`
+
+and set the Baud Rate 115200
+
+```C
+void esp01_init(const char*ssid,const char*password,const char*ip,const char*port);//connect wifi and create udp
+void esp01_start();//start to do transparent transimition
+void esp01_close();//stop transmition
+void esp01_sendData(uint8_t* data,uint8_t len);//send data
+void esp01_sendAt(uint8_t* data);//send AT cmd
+```
+
+if you get seekfree assistant from [逐飞助手](https://gitee.com/seekfree/seekfree_assistant)
+
+you can use virtual oscilloscope
+
+```c
+esp01_oscilloscope_channel(i,a) //set data a at channel i
+void elsp01_oscilloscope_send();//transmit all channels that has datas to virtual oscilloscope
+```
+
